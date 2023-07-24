@@ -1,0 +1,45 @@
+/* Define custom colors at the root level using CSS variables */
+:root {
+  --colour-primary: #002e2a; /* Custom primary color */
+  --colour-secondary: #e6b412; /* Custom secondary color */
+}
+
+/* Style for elements with the class "bg-primary" */
+.bg-primary {
+  background-color: var(
+    --colour-primary
+  ); /* Set background color to the custom primary color */
+}
+
+/* Style for elements with the class "bg-secondary" */
+.bg-secondary {
+  background-color: var(
+    --colour-secondary
+  ); /* Set background color to the custom secondary color */
+}
+
+/* Style for elements with the class "text-primary" */
+.text-primary {
+  color: var(--colour-primary); /* Set text color to the custom primary color */
+}
+
+/* Style for elements with the class "text-secondary" */
+.text-secondary {
+  color: var(
+    --colour-secondary
+  ); /* Set text color to the custom secondary color */
+}
+
+/* Style for elements with the class "border-primary" */
+.border-primary {
+  border-color: var(
+    --colour-primary
+  ); /* Set border color to the custom primary color */
+}
+
+/* Style for elements with the class "border-secondary" */
+.border-secondary {
+  border-color: var(
+    --colour-secondary
+  ); /* Set border color to the custom secondary color */
+}
