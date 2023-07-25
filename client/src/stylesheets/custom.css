@@ -1,0 +1,15 @@
+/* CSS Code for Styling Cards */
+/* Define a CSS class called "card" */
+.card {
+  /* Set the background color of elements with class "card" to white */
+  background-color: white;
+
+  /* Set the border properties for elements with class "card" */
+  border: 1px solid #b1b1b1;
+}
+
+/* Define a CSS class called "w-400" */
+.w-400 {
+  /* Set the width of elements with class "w-400" to 400 pixels */
+  width: 400px;
+}

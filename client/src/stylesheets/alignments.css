@@ -11,7 +11,7 @@
 }
 
 /* .flex-column: This class sets the CSS 'flex-direction' property to 'column', which makes the flex items layout in a column. */
-.flex-column {
+.flex-col {
   flex-direction: column;
 }
 

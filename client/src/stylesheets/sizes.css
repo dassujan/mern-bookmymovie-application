@@ -42,3 +42,8 @@
 .text-3xl {
   font-size: 30px;
 }
+
+/* Add a border around elements with this class */
+.border {
+  border-width: 1px;
+}
