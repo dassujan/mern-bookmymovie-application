@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useSelector } from 'react-redux';
 
 // Import CSS stylesheets to apply styles to the application
 import "./stylesheets/alignments.css";
@@ -16,9 +17,16 @@ import "./stylesheets/theme.css";
 
 // Define the main functional component 'App' that represents the application
 function App() {
+  const { loading } = useSelector(state => state.loaders); // Get the 'loading' state from the redux store
   // Return the JSX code for the component
   return (
     <div>
+      {/* If the 'loading' state is true, display the loader */}
+      {loading && (
+        <div className='loader-parent'>
+          <div className="loader"></div>
+        </div>
+      )}
       {/* Wrap the entire application with 'BrowserRouter' to enable routing */}
       <BrowserRouter>
         {/* Define the routes for the application using 'Routes' component */}

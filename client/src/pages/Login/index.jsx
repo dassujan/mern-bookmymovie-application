@@ -4,18 +4,21 @@ import { Form, message } from "antd"; // Importing the 'Form' component from the
 import Button from "../../components/Button"; // Importing a custom 'Button' component from a file located at '../../components/Button'
 import { Link, useNavigate } from "react-router-dom"; // Importing the 'Link' component from the 'react-router-dom' library, used for navigation in a React application
 import { LoginUser } from "../../apicalls/users"; // Importing the 'LoginUser' function from a file located at '../../apicalls/users'
+import { useDispatch } from "react-redux"; // Importing the 'useDispatch' hook from the 'react-redux' library
+import { HideLoading, ShowLoading } from "../../redux/loadersSlice"; // Importing the 'HideLoading' and 'ShowLoading' actions from a file located at '../../redux/loadersSlice'
 
 // Defining the 'Register' functional component
 function Register() {
   const navigate = useNavigate(); // Creating a navigate function using the 'useNavigate' hook from the 'react-router-dom' library
-
+  const dispatch = useDispatch(); // Creating a dispatch function using the 'useDispatch' hook from the 'react-redux' library
   // Creating a function 'onFinish' that will be called when the form is submitted successfully
   const onFinish = async (values) => {
     // console.log("Success:", values); // Output the form values to the console
 
     try {
+      dispatch(ShowLoading()); // Dispatching the 'ShowLoading' action to show the loading indicator
       const response = await LoginUser(values); // Calling the 'LoginUser' function with the form values as the argument
-
+      dispatch(HideLoading()); // Dispatching the 'HideLoading' action to hide the loading indicator
       if (response.success) {
         message.success(response.message); // Displaying a success message if the login was successful
         localStorage.setItem("token", response.data); // Storing the JWT token in the browser's local storage
@@ -24,6 +27,7 @@ function Register() {
         message.error(response.message); // Displaying an error message if the login was unsuccessful
       }
     } catch (error) {
+      dispatch(HideLoading()); // Dispatching the 'HideLoading' action to hide the loading indicator
       message.error(error.message); // Displaying an error message if an error occurred while processing the request
     }
   };

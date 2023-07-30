@@ -3,27 +3,34 @@ import { message } from "antd"; // Component for displaying messages or notifica
 import React, { useEffect, useState } from "react"; // React hooks for creating functional components and managing state
 import { GetCurrentUser } from "../apicalls/users"; // Function to fetch current user's data through an API call
 import { useNavigate } from "react-router-dom"; // Hook for programmatic navigation in a React application
+import { useDispatch, useSelector } from "react-redux"; // Hooks for accessing the redux store and dispatching redux actions
+import { SetUser } from "../redux/usersSlice"; // Redux slice for managing the user state
+import { HideLoading, ShowLoading } from "../redux/loadersSlice"; // Redux slice for managing the loading state
 
 // Function component to protect certain routes based on user authentication
 function ProtectedRoute({ children }) {
+  const { user } = useSelector((state) => state.users); // Access the user state from the redux store
   const navigate = useNavigate(); // Access the navigation function from react-router-dom
-  const [user, setUser] = useState(null); // State to store the current user's data or null if not authenticated
+  const dispatch = useDispatch(); // Access the dispatch function from the redux store
 
   // Function to fetch the current user's data from the server
   const getCurrentUser = async () => {
     try {
+      dispatch(ShowLoading()); // Dispatch the 'ShowLoading' action to show the loading indicator
       const response = await GetCurrentUser(); // Call the GetCurrentUser API function
+      dispatch(HideLoading()); // Dispatch the 'HideLoading' action to hide the loading indicator
       if (response.success) {
-        // If API call is successful, set the user state with response data
-        setUser(response.data);
+        // If API call is successful, set the user state to the response data
+        dispatch(SetUser(response.data)); // Dispatch the 'SetUser' action to set the user state to the response data
       } else {
         // If API call fails, set the user state to null and display an error message
-        setUser(null);
+        dispatch(SetUser(null)); // Dispatch the 'SetUser' action to set the user state to null
         message.error(response.message);
       }
     } catch (error) {
-      // If there is an error in the API call, set the user state to null and display the error message
-      setUser(null);
+      // If API call fails, set the user state to null and display an error message
+      dispatch(HideLoading()); // Dispatch the 'HideLoading' action to hide the loading indicator
+      dispatch(SetUser(null)); // Dispatch the 'SetUser' action to set the user state to null
       message.error(error.message);
     }
   };

@@ -4,22 +4,28 @@ import { Form, message } from "antd"; // Importing the 'Form' component from the
 import Button from "../../components/Button"; // Importing a custom 'Button' component from a relative file path
 import { Link, useNavigate } from "react-router-dom"; // Importing the 'Link' component from 'react-router-dom', used for navigation in React applications
 import { RegisterUser } from "../../apicalls/users"; // Importing the 'RegisterUser' function from a relative file path
-import { useEffect } from "react";
+import { useEffect } from "react"; // Importing the 'useEffect' hook from the 'react' library
+import { useDispatch } from "react-redux"; // Importing the 'useDispatch' hook from the 'react-redux' library
+import { HideLoading, ShowLoading } from "../../redux/loadersSlice"; // Importing the 'HideLoading' and 'ShowLoading' actions from a relative file path
 
 // Defining the 'Register' functional component
 function Register() {
+  const dispatch = useDispatch(); // Creating a dispatch function using the 'useDispatch' hook from the 'react-redux' library
   const navigate = useNavigate(); // Creating a navigate function using the 'useNavigate' hook from the 'react-router-dom' library
 
   // Callback function for form submission
   const onFinish = async (values) => {
     try {
+      dispatch(ShowLoading()); // Dispatching the 'ShowLoading' action to show the loading indicator
       const response = await RegisterUser(values); // Making an asynchronous API call to register the user
+      dispatch(HideLoading()); // Dispatching the 'HideLoading' action to hide the loading indicator
       if (response.success) {
         message.success(response.message); // Displaying a success message using the 'message' component from the 'antd' library
       } else {
         message.error(response.message); // Displaying an error message using the 'message' component from the 'antd' library
       }
     } catch (error) {
+      dispatch(HideLoading()); // Dispatching the 'HideLoading' action to hide the loading indicator
       message.error(error.message); // Handling API call errors and displaying an error message
     }
   };

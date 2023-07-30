@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import store from './redux/store';  // Import the store from redux
+import { Provider } from 'react-redux';  // Import the Provider from react-redux
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+root.render( // Wrap the entire application with the Provider component and pass the store as a prop
+  <Provider
+    store={store}
+  >
     <App />
-  </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
