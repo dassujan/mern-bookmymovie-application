@@ -1,15 +1,35 @@
 // Importing the necessary libraries and components
 import React from "react"; // Importing the React library, used for creating React components
-import { Form } from "antd"; // Importing the 'Form' component from the 'antd' library, a UI component library for React
+import { Form, message } from "antd"; // Importing the 'Form' component from the 'antd' library, a UI component library for React
 import Button from "../../components/Button"; // Importing a custom 'Button' component from a relative file path
-import { Link } from "react-router-dom"; // Importing the 'Link' component from 'react-router-dom', used for navigation in React applications
+import { Link, useNavigate } from "react-router-dom"; // Importing the 'Link' component from 'react-router-dom', used for navigation in React applications
+import { RegisterUser } from "../../apicalls/users"; // Importing the 'RegisterUser' function from a relative file path
+import { useEffect } from "react";
 
 // Defining the 'Register' functional component
 function Register() {
+  const navigate = useNavigate(); // Creating a navigate function using the 'useNavigate' hook from the 'react-router-dom' library
+
   // Callback function for form submission
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const onFinish = async (values) => {
+    try {
+      const response = await RegisterUser(values); // Making an asynchronous API call to register the user
+      if (response.success) {
+        message.success(response.message); // Displaying a success message using the 'message' component from the 'antd' library
+      } else {
+        message.error(response.message); // Displaying an error message using the 'message' component from the 'antd' library
+      }
+    } catch (error) {
+      message.error(error.message); // Handling API call errors and displaying an error message
+    }
   };
+
+  // useEffect hook to check if the user is already logged in and redirect to the homepage if a token is present
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/"); // Redirecting the user to the homepage using the 'navigate' function
+    }
+  }, []);
 
   // JSX code representing the UI of the 'Register' component
   return (

@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Import CSS stylesheets to apply styles to the application
 import "./stylesheets/alignments.css";
@@ -22,9 +23,9 @@ function App() {
       <BrowserRouter>
         {/* Define the routes for the application using 'Routes' component */}
         <Routes>
-          {/* Define the route for the home page */}
-          {/* When the path is '/', render the 'Home' component */}
-          <Route path='/' element={<Home />} />
+          {/* Define the route for the home page. When the path is '/', render the 'Home' component */}
+          {/* ProtectedRoute is a custom component that checks if the user is logged in and redirects to the login page if not */}
+          <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
 
           {/* Define the route for the login page */}
           {/* When the path is '/login', render the 'Login' component */}

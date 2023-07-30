@@ -1,8 +1,9 @@
 // Import required modules and packages
-const router = require('express').Router(); // Express Router for defining routes
-const User = require('../models/userModel'); // User model for interacting with user data
-const bcrypt = require('bcryptjs'); // Library for hashing passwords securely
-const jwt = require('jsonwebtoken'); // Library for working with JSON Web Tokens (JWTs)
+const router = require('express').Router(); // Import the Express Router to define routes
+const User = require('../models/userModel'); // Import the User model for interacting with user data
+const bcrypt = require('bcryptjs'); // Import the bcrypt library for hashing passwords securely
+const jwt = require('jsonwebtoken'); // Import the jsonwebtoken library for working with JSON Web Tokens (JWTs)
+const authMiddleware = require('../middlewares/authMiddleware'); // Import the authMiddleware for authenticating routes
 
 // Register a new user
 router.post('/register', async (req, res) => {
@@ -76,6 +77,27 @@ router.post('/login', async (req, res) => {
             data: token,
         });
 
+    } catch (error) {
+        // If an error occurs, send an error response
+        res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
+// Get user details by id
+router.get('/get-current-user', authMiddleware, async (req, res) => {
+    try {
+        // Fetch user details from the database using the userId extracted from the request
+        const user = await User.findById(req.body.userId).select("-password");
+
+        // Send a response with the user details excluding the password field
+        res.send({
+            success: true,
+            message: "User details fetched successfully",
+            data: user,
+        });
     } catch (error) {
         // If an error occurs, send an error response
         res.send({

@@ -1,55 +1,75 @@
 // Importing the necessary libraries and components
-import React from "react"; // Importing the React library, used for creating React components
-import { Form } from "antd"; // Importing the 'Form' component from the 'antd' library, a UI component library for React
+import React, { useEffect } from "react"; // Importing the React library, used for creating React components
+import { Form, message } from "antd"; // Importing the 'Form' component from the 'antd' library, a UI component library for React
 import Button from "../../components/Button"; // Importing a custom 'Button' component from a file located at '../../components/Button'
-import { Link } from "react-router-dom"; // Importing the 'Link' component from the 'react-router-dom' library, used for navigation in a React application
+import { Link, useNavigate } from "react-router-dom"; // Importing the 'Link' component from the 'react-router-dom' library, used for navigation in a React application
+import { LoginUser } from "../../apicalls/users"; // Importing the 'LoginUser' function from a file located at '../../apicalls/users'
 
-// Defining the 'LOGIN' functional component
-function LOGIN() {
+// Defining the 'Register' functional component
+function Register() {
+  const navigate = useNavigate(); // Creating a navigate function using the 'useNavigate' hook from the 'react-router-dom' library
+
   // Creating a function 'onFinish' that will be called when the form is submitted successfully
-  const onFinish = (values) => {
-    console.log("Success:", values); // Output the form values to the console
+  const onFinish = async (values) => {
+    // console.log("Success:", values); // Output the form values to the console
+
+    try {
+      const response = await LoginUser(values); // Calling the 'LoginUser' function with the form values as the argument
+
+      if (response.success) {
+        message.success(response.message); // Displaying a success message if the login was successful
+        localStorage.setItem("token", response.data); // Storing the JWT token in the browser's local storage
+        window.location.href = "/"; // Redirecting the user to the home page
+      } else {
+        message.error(response.message); // Displaying an error message if the login was unsuccessful
+      }
+    } catch (error) {
+      message.error(error.message); // Displaying an error message if an error occurred while processing the request
+    }
   };
+
+  // The 'useEffect' hook runs once after the component is mounted
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/"); // If a token is found in local storage, redirect the user to the home page
+    }
+  }, []);
 
   // Rendering the component's UI using JSX
   return (
     <div className="flex justify-center h-screen items-center bg-primary">
-      {" "}
-      {/* Styling the container div */}
       <div className="card p-3 w-400">
-        {" "}
-        {/* Styling the login card */}
-        <h1 className="text-xl mb-1"> BookMyMovie - LOGIN </h1>{" "}
-        {/* Displaying the heading */}
-        <hr /> {/* Horizontal line */}
+        <h1 className="text-xl mb-1">BookMyMovie - LOGIN</h1>
+        <hr />
+        {/* 'Form' component from Ant Design */}
         <Form layout="vertical" className="mt-1" onFinish={onFinish}>
-          {" "}
-          {/* Creating a form with a vertical layout */}
-          {/* Form item for the 'Email' field */}
+          {/* Email input field */}
           <Form.Item
             label="Email"
             name="email"
             rules={[{ required: true, message: "Please input your email!" }]}
           >
-            <input type="email" /> {/* Input field for the email */}
+            <input type="email" />
           </Form.Item>
-          {/* Form item for the 'Password' field */}
+
+          {/* Password input field */}
           <Form.Item
             label="Password"
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <input type="password" /> {/* Input field for the password */}
+            <input type="password" />
           </Form.Item>
+
+          {/* Container for the login button and registration link */}
           <div className="flex flex-col mt-2 gap-1">
-            {" "}
-            {/* Styling the buttons and link in a flex column */}
-            <Button fullWidth title="LOGIN" type="submit" />{" "}
-            {/* Using the custom 'Button' component with the title "LOGIN" and submit type */}
+            {/* Custom 'Button' component */}
+            <Button fullWidth title="LOGIN" type="submit" />
+
+            {/* Link to the registration page */}
             <Link to="/register" className="text-primary">
               {" "}
-              {/* Creating a link to the registration page */}
-              Don't have an account? Register {/* Text content for the link */}
+              Don't have an account? Register
             </Link>
           </div>
         </Form>
@@ -58,5 +78,5 @@ function LOGIN() {
   );
 }
 
-// Exporting the 'LOGIN' component as the default export
-export default LOGIN;
+// Exporting the 'Register' component as the default export
+export default Register;
