@@ -48,10 +48,29 @@ function ProtectedRoute({ children }) {
 
   // Render the content conditionally based on the user state
   return (
-    user && ( // If the user state is not null (user is authenticated)
-      <div>
-        {user.name} {/* Display the user's name */}
-        {children} {/* Render the child elements passed to the component */}
+    user && ( // If the user state is not null, render the child elements passed to the component
+      <div className="layout p-1">
+        <div className="header bg-primary flex justify-between p-2">
+          <div>
+            <h1 className="text-2xl text-white">BookMyMovie</h1>
+          </div>
+
+          <div className="bg-white p-1 flex gap-1">
+            <i className="ri-shield-user-line text-primary"></i>
+            {user.name} {/* Render the user's name */}
+            <i
+              className="ri-logout-box-r-line ml-2"
+              onClick={() => {
+                // Handle logout: remove the token from localStorage and navigate to the login page
+                localStorage.removeItem("token");
+                navigate("/login");
+              }}
+            ></i>
+          </div>
+        </div>
+        <div className="content mt-1 p-1">
+          {children} {/* Render the child elements passed to the component */}
+        </div>
       </div>
     )
   );

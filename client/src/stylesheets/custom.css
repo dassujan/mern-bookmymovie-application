@@ -14,6 +14,12 @@
   width: 400px;
 }
 
+.content {
+  /* Set the padding of elements with class "content" to 20 pixels */
+  min-height: 85vh;
+  border: 1px solid #b1b1b1;
+}
+
 /* loader */
 .loader-parent {
   /* This class defines the styles for the parent container of the loader. */
