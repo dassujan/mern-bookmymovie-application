@@ -16,8 +16,14 @@ app.use(express.json());
 // Import the userRoute module containing route handlers for user-related operations
 const userRoute = require('./routes/userRoute');
 
+// Import the movieRoute module containing route handlers for movie-related operations
+const moviesRoute = require('./routes/moviesRoute');
+
 // Add the userRoute module as middleware to handle requests starting with /api/users
 app.use('/api/users', userRoute);
+
+// Add the movieRoute module as middleware to handle requests starting with /api/movies
+app.use('/api/movies', moviesRoute);
 
 // Set the port to listen on. It will use the value of PORT environment variable if set, otherwise use 5000.
 const port = process.env.PORT || 5000;

@@ -52,12 +52,29 @@ function ProtectedRoute({ children }) {
       <div className="layout p-1">
         <div className="header bg-primary flex justify-between p-2">
           <div>
-            <h1 className="text-2xl text-white">BookMyMovie</h1>
+            <h1
+              className="text-2xl text-white cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              BookMyMovie
+            </h1>
           </div>
-
+          {/* Display user-related information */}
           <div className="bg-white p-1 flex gap-1">
             <i className="ri-shield-user-line text-primary"></i>
-            {user.name} {/* Render the user's name */}
+            <h4
+              className=" underline"
+              onClick={() => {
+                if (user.isAdmin) {
+                  navigate("/admin");
+                } else {
+                  navigate("/profile");
+                }
+              }}
+            >
+              {user.name} {/* Render the user's name */}
+            </h4>
+            {/* Logout button */}
             <i
               className="ri-logout-box-r-line ml-2"
               onClick={() => {
@@ -76,4 +93,5 @@ function ProtectedRoute({ children }) {
   );
 }
 
-export default ProtectedRoute; // Export the ProtectedRoute component
+// Export the ProtectedRoute component
+export default ProtectedRoute;

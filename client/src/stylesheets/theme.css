@@ -19,6 +19,16 @@
   background-color: var(--colour-secondary);
 }
 
+.bg-error {
+  /* Set background color to the custom secondary color */
+  background-color: #ff0000;
+}
+
+.bg-warning {
+  /* Set background color to the custom secondary color */
+  background-color: #a2840e;
+}
+
 /* Style for elements with the class "bg-white" */
 .bg-white {
   /* Set background color to white */

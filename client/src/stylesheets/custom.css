@@ -20,6 +20,44 @@
   border: 1px solid #b1b1b1;
 }
 
+/* Define styles for elements with class "underline" */
+.underline {
+  /* Add underline to text and change cursor to pointer on hover */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Define styles for elements with class "cursor-pointer" */
+.cursor-pointer {
+  /* Change cursor to pointer on hover */
+  cursor: pointer;
+}
+
+/* Define styles for elements with class "uppercase" */
+.uppercase {
+  /* Transform text to uppercase */
+  text-transform: uppercase;
+}
+
+/* Define styles for italicized text */
+i {
+  /* Set font size of italicized text to 20 pixels */
+  font-size: 20px;
+}
+
+/* Define styles for table elements */
+table {
+  /* Set border for table elements */
+  border: 1px solid #b1b1b1;
+}
+
+/* Define styles for table header cells */
+thead th {
+  /* Set bottom border and uppercase text for table header cells */
+  border-bottom: 1px solid #b1b1b1 !important;
+  text-transform: uppercase;
+}
+
 /* loader */
 .loader-parent {
   /* This class defines the styles for the parent container of the loader. */

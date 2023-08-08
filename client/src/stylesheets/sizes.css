@@ -47,3 +47,8 @@
 .border {
   border-width: 1px;
 }
+
+/* Add a border around elements with this class */
+.br-1 {
+  border-radius: 4px;
+}
