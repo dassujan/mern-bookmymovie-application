@@ -87,3 +87,57 @@ export const DeleteTheatre = async (payload) => {
     return error.response;
   }
 };
+
+// Add show
+// Define an asynchronous function to add a show.
+export const AddShow = async (payload) => {
+  try {
+    // Send an HTTP POST request with the provided payload to add a show.
+    const response = await axiosInstance.post(
+      "/api/theatres/add-show",
+      payload
+    );
+    // If the request is successful, return the response data from the server.
+    return response.data;
+  } catch (error) {
+    // If an error occurs, return the response object from the error.
+    // This may include information about the error status and message.
+    return error.response;
+  }
+};
+
+// get all shows by theatre
+// Define an asynchronous function to get a list of shows based on the theatre.
+export const GetAllShowsByTheatre = async (payload) => {
+  try {
+    // Send an HTTP POST request with the provided payload to get all shows by theatre.
+    const response = await axiosInstance.post(
+      "/api/theatres/get-all-shows-by-theatre",
+      payload
+    );
+    // If the request is successful, return the response data from the server.
+    return response.data;
+  } catch (error) {
+    // If an error occurs, return the response object from the error.
+    // This may include information about the error status and message.
+    return error.response;
+  }
+};
+
+// delete show
+// Define an asynchronous function to delete a show.
+export const DeleteShow = async (payload) => {
+  try {
+    // Send an HTTP POST request with the provided payload to delete a show.
+    const response = await axiosInstance.post(
+      "/api/theatres/delete-show",
+      payload
+    );
+    // If the request is successful, return the response data from the server.
+    return response.data;
+  } catch (error) {
+    // If an error occurs, return the response object from the error.
+    // This may include information about the error status and message.
+    return error.response;
+  }
+};

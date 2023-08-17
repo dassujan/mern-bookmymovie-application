@@ -7,6 +7,9 @@ const authMiddleware = require('../middlewares/authMiddleware');
 // Import the Theatre model
 const Theatre = require('../models/theatreModel');
 
+// Import the Show model
+const Show = require('../models/showModel');
+
 // add theatre
 // Define a POST route to add a new theatre
 router.post('/add-theatre', async (req, res) => {
@@ -106,6 +109,74 @@ router.post("/delete-theatre", async (req, res) => {
         res.send({
             success: true,
             message: 'Theatre deleted successfully',
+        });
+    } catch (error) {
+        // Send an error response if an exception occurs
+        res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
+
+// add show
+// Define a POST route to add a new show
+router.post("/add-show", async (req, res) => {
+    try {
+        // Create a new Show instance using request body data
+        const newShow = new Show(req.body);
+
+        // Save the new show to the database
+        await newShow.save();
+
+        // Send a success response
+        res.send({
+            success: true,
+            message: 'Show added successfully',
+        });
+    } catch (error) {
+        // Send an error response if an exception occurs
+        res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
+// get all shows by theatre
+// Define a POST route to get all shows by a specific theatre
+router.post("/get-all-shows-by-theatre", async (req, res) => {
+    try {
+        // Find all shows by the specified theatreId and sort them by creation date
+        const shows = await Show.find({ theatre: req.body.theatreId }).populate('movie').sort({ createdAt: -1 });
+
+        // Send a success response with the show data
+        res.send({
+            success: true,
+            message: 'Shows fetched successfully',
+            data: shows,
+        });
+    } catch (error) {
+        // Send an error response if an exception occurs
+        res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
+// delete show
+// Define a POST route to delete a show
+router.post("/delete-show", async (req, res) => {
+    try {
+        // Delete the show with the specified showId
+        await Show.findByIdAndDelete(req.body.showId);
+
+        // Send a success response
+        res.send({
+            success: true,
+            message: 'Show deleted successfully',
         });
     } catch (error) {
         // Send an error response if an exception occurs

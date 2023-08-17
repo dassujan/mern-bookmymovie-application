@@ -7,6 +7,7 @@ import { GetAllTheatresByOwner, DeleteTheatre } from "../../apicalls/theatres"; 
 import { useDispatch, useSelector } from "react-redux"; // Redux hooks
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice"; // Loading state actions
 import { Table, message } from "antd"; // Ant Design components for table and messages
+import Shows from "./Shows"; // Component for shows
 
 // Define the main component
 function TheatresList() {
@@ -19,6 +20,9 @@ function TheatresList() {
   const [selectedTheatre, setSelectedTheatre] = useState(null);
   const [formType = "add", setFormType] = useState("add");
   const [theatres = [], setTheatres] = useState([]);
+
+  // State variables and their updater functions
+  const [openShowsModal = false, setOpenShowsModal] = useState(false);
 
   // Redux dispatcher and navigation hook
   const dispatch = useDispatch();
@@ -122,7 +126,18 @@ function TheatresList() {
                 setShowTheatreFormModal(true);
               }}
             ></i>
-            {record.isActive && <span className="underline">Shows</span>}
+            {/* Icon for viewing shows */}
+            {record.isActive && (
+              <span
+                className="underline"
+                onClick={() => {
+                  setSelectedTheatre(record);
+                  setOpenShowsModal(true);
+                }}
+              >
+                Shows
+              </span>
+            )}
           </div>
         );
       },
@@ -162,6 +177,15 @@ function TheatresList() {
           selectedTheatre={selectedTheatre}
           setSelectedTheatre={setSelectedTheatre}
           getData={getData}
+        />
+      )}
+
+      {/* Modal for shows */}
+      {openShowsModal && (
+        <Shows
+          openShowsModal={openShowsModal}
+          setOpenShowsModal={setOpenShowsModal}
+          theatre={selectedTheatre}
         />
       )}
     </div>
