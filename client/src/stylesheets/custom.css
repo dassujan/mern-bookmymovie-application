@@ -58,6 +58,12 @@ thead th {
   text-transform: uppercase;
 }
 
+.search-input {
+  /* Set border for search input */
+  height: 60px;
+  border-radius: 5px;
+}
+
 /* loader */
 .loader-parent {
   /* This class defines the styles for the parent container of the loader. */
