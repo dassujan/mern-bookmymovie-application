@@ -64,6 +64,12 @@ thead th {
   border-radius: 5px;
 }
 
+.divider {
+  /* Set border for divider */
+  border: 1px solid #e1e1e1;
+  margin: 10px 0;
+}
+
 /* loader */
 .loader-parent {
   /* This class defines the styles for the parent container of the loader. */

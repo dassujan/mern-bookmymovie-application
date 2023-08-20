@@ -187,5 +187,51 @@ router.post("/delete-show", async (req, res) => {
     }
 });
 
+// get all unique theatres which have shows of a movie
+// Define a POST route to get all unique theatres which have shows of a movie
+router.post("/get-all-theatres-by-movie", async (req, res) => {
+
+    try {
+        // get movie and date from request body
+        const { movie, date } = req.body;
+
+        // find all shows of a movie
+        const shows = await Show.find({ movie, date }).populate("theatre").sort({ createdAt: -1 });
+
+        // get all unique theatres
+        let uniqueTheatres = [];
+        shows.forEach((show) => {
+            const theatre = uniqueTheatres.find((theatre) => theatre._id === show.theatre._id);
+
+            // if theatre is not present in uniqueTheatres array, add it
+            if (!theatre) {
+                const showsForThisTheatre = shows.filter(
+                    (showObj) => showObj.theatre._id == show.theatre._id
+                );
+                uniqueTheatres.push({
+                    ...show.theatre._doc,
+                    shows: showsForThisTheatre,
+                });
+            }
+            
+        });
+
+        // Send a success response with the theatre data
+        res.send({
+            success: true,
+            message: 'Theatres fetched successfully',
+            data: uniqueTheatres,
+        });
+
+    } catch (error) {
+        // Send an error response if an exception occurs
+        res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+
+});
+
 // Export the router to be used in other parts of the application
 module.exports = router;

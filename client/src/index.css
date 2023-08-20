@@ -16,4 +16,7 @@
   
   /* Remove any default padding applied by the browser for all elements. */
   padding: 0;
+
+  /* Remove any default outline applied by the browser for all elements. */
+  color: rgb(69, 69, 69);
 }

@@ -16,6 +16,8 @@ import "./stylesheets/sizes.css"; // Import size-related styles
 import "./stylesheets/form-elements.css"; // Import styles for form elements
 import "./stylesheets/custom.css"; // Import custom styles
 import "./stylesheets/theme.css"; // Import theme-related styles
+import TheatresForMovie from './pages/TheatresForMovie'; // Import the TheatresForMovie page component
+import BookShow from './pages/BookShow'; // Import the BookShow page component
 
 // Define the main functional component 'App' that represents the application
 function App() {
@@ -38,6 +40,8 @@ function App() {
           {/* Define the route for the home page. When the path is '/', render the 'Home' component */}
           {/* ProtectedRoute is a custom component that checks if the user is logged in and redirects to the login page if not */}
           <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path='/movie/:id' element={<ProtectedRoute><TheatresForMovie /></ProtectedRoute>} />
+          <Route path='/book-show/:id' element={<ProtectedRoute><BookShow /></ProtectedRoute>} />
           <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
 

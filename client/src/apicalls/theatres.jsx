@@ -141,3 +141,20 @@ export const DeleteShow = async (payload) => {
     return error.response;
   }
 };
+
+// get all theatres for a movie
+// Define an asynchronous function to get a list of theatres based on the movie.
+export const GetAllTheatresByMovie = async (payload) => {
+  try {
+    // Send an HTTP POST request with the provided payload to get all theatres by movie.
+    const response = await axiosInstance.post(
+      "/api/theatres/get-all-theatres-by-movie",
+      payload
+    );
+    // If the request is successful, return the response data from the server.
+    return response.data;
+  } catch (error) {
+    // If an error occurs, return the response object from the error.
+    return error.response;
+  }
+};

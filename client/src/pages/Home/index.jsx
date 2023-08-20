@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"; // Importing useDispatch hook from Re
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice"; // Importing Redux actions related to loading indicators
 import { GetAllMovies } from "../../apicalls/movies"; // Importing API call functions for movies
 import { useNavigate } from "react-router-dom"; // Importing useNavigate hook from React Router DOM
+import moment from "moment";
 
 // Define a function component called 'Home'.
 function Home() {
@@ -41,14 +42,17 @@ function Home() {
         className="search-input"
         placeholder="Search for movies"
       />
-
       {/* Displaying a row of movie cards */}
       <Row gutter={[20]} className="mt-2">
         {movies.map((movie) => (
           <Col span={6}>
             <div
               className="card flex flex-col gap-1 cursor-pointer"
-              onClick={() => navigate(`/movie/${movie._id}`)}
+              onClick={() =>
+                navigate(
+                  `/movie/${movie._id}?date=${moment().format("YYYY-MM-DD")}`
+                )
+              }
             >
               <img src={movie.poster} alt="" height={200} />
               <div className="flex justify-center p-1">

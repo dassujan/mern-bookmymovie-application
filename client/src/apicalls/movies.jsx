@@ -62,3 +62,19 @@ export const DeleteMovie = async (payload) => {
     return error.response;
   }
 };
+
+// get movie by id function (admin and user)
+export const GetMovieById = async (id) => {
+  try {
+    // Send a GET request to the "/api/movies/get-movie-by-id" endpoint with the provided id.
+    const response = await axiosInstance.get(
+      `/api/movies/get-movie-by-id/${id}`
+    );
+    // If the request is successful (status code 2xx), return the data from the response.
+    return response.data;
+  } catch (error) {
+    // If an error occurs during the request, return the response from the error object.
+    // This may include the status code, headers, and possibly an error message from the server.
+    return error.response;
+  }
+}
