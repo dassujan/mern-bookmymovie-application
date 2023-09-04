@@ -12,7 +12,7 @@ const Show = require('../models/showModel');
 
 // add theatre
 // Define a POST route to add a new theatre
-router.post('/add-theatre', async (req, res) => {
+router.post('/add-theatre', authMiddleware, async (req, res) => {
     try {
         // Create a new Theatre instance using request body data
         const newTheatre = new Theatre(req.body);
@@ -36,7 +36,7 @@ router.post('/add-theatre', async (req, res) => {
 
 // get all theatres
 // Define a GET route to get all theatres
-router.get("/get-all-theatres", async (req, res) => {
+router.get("/get-all-theatres", authMiddleware, async (req, res) => {
     try {
         // Find all theatres from the database and sort them by creation date
         const theatres = await Theatre.find().sort({ createdAt: -1 });
@@ -57,7 +57,7 @@ router.get("/get-all-theatres", async (req, res) => {
 
 // get theatre by owner
 // Define a POST route to get all theatres owned by a specific owner
-router.post("/get-all-theatres-by-owner", async (req, res) => {
+router.post("/get-all-theatres-by-owner", authMiddleware, async (req, res) => {
     try {
         // Find theatres owned by the specified owner and sort them by creation date
         const theatres = await Theatre.find({ owner: req.body.owner }).sort({ createdAt: -1 });
@@ -79,7 +79,7 @@ router.post("/get-all-theatres-by-owner", async (req, res) => {
 
 // update theatre
 // Define a POST route to update a theatre
-router.post("/update-theatre", async (req, res) => {
+router.post("/update-theatre", authMiddleware, async (req, res) => {
     try {
         // Update the theatre with the specified theatreId using the request body data
         await Theatre.findByIdAndUpdate(req.body.theatreId, req.body);
@@ -100,7 +100,7 @@ router.post("/update-theatre", async (req, res) => {
 
 // delete theatre
 // Define a POST route to delete a theatre
-router.post("/delete-theatre", async (req, res) => {
+router.post("/delete-theatre", authMiddleware, async (req, res) => {
     try {
         // Delete the theatre with the specified theatreId
         await Theatre.findByIdAndDelete(req.body.theatreId);
@@ -122,7 +122,7 @@ router.post("/delete-theatre", async (req, res) => {
 
 // add show
 // Define a POST route to add a new show
-router.post("/add-show", async (req, res) => {
+router.post("/add-show", authMiddleware, async (req, res) => {
     try {
         // Create a new Show instance using request body data
         const newShow = new Show(req.body);
@@ -146,7 +146,7 @@ router.post("/add-show", async (req, res) => {
 
 // get all shows by theatre
 // Define a POST route to get all shows by a specific theatre
-router.post("/get-all-shows-by-theatre", async (req, res) => {
+router.post("/get-all-shows-by-theatre", authMiddleware, async (req, res) => {
     try {
         // Find all shows by the specified theatreId and sort them by creation date
         const shows = await Show.find({ theatre: req.body.theatreId }).populate('movie').sort({ createdAt: -1 });
@@ -168,7 +168,7 @@ router.post("/get-all-shows-by-theatre", async (req, res) => {
 
 // delete show
 // Define a POST route to delete a show
-router.post("/delete-show", async (req, res) => {
+router.post("/delete-show", authMiddleware, async (req, res) => {
     try {
         // Delete the show with the specified showId
         await Show.findByIdAndDelete(req.body.showId);
@@ -189,7 +189,7 @@ router.post("/delete-show", async (req, res) => {
 
 // get all unique theatres which have shows of a movie
 // Define a POST route to get all unique theatres which have shows of a movie
-router.post("/get-all-theatres-by-movie", async (req, res) => {
+router.post("/get-all-theatres-by-movie", authMiddleware, async (req, res) => {
 
     try {
         // get movie and date from request body
@@ -213,7 +213,7 @@ router.post("/get-all-theatres-by-movie", async (req, res) => {
                     shows: showsForThisTheatre,
                 });
             }
-            
+
         });
 
         // Send a success response with the theatre data
@@ -231,6 +231,27 @@ router.post("/get-all-theatres-by-movie", async (req, res) => {
         });
     }
 
+});
+
+// get show by id
+// Define a POST route to get a show by id
+router.post("/get-show-by-id", authMiddleware, async (req, res) => {
+    try {
+        // Find the show with the specified showId
+        const show = await Show.findById(req.body.showId).populate('movie').populate('theatre');
+        // Send a success response with the show data
+        res.send({
+            success: true,
+            message: 'Show fetched successfully',
+            data: show,
+        });
+    } catch (error) {
+        // Send an error response if an exception occurs
+        res.send({
+            success: false,
+            message: error.message,
+        });
+    }
 });
 
 // Export the router to be used in other parts of the application

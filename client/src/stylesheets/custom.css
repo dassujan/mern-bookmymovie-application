@@ -70,6 +70,33 @@ thead th {
   margin: 10px 0;
 }
 
+/* seats */
+.seat {
+  /* Set height, width, border, and cursor for seat elements */
+  height: 30px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #b1b1b1;
+  cursor: pointer;
+}
+
+.selected-seat h1 {
+  /* Set color of seat number to white for selected seats */
+  color: white !important;
+}
+
+.selected-seat {
+  /* Set background color of selected seats */
+  background-color: #118838;
+}
+
+.booked-seat {
+  /* Set background color of booked seats */
+  background-color: #b1b1b1;
+}
+
 /* loader */
 .loader-parent {
   /* This class defines the styles for the parent container of the loader. */

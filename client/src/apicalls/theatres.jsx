@@ -158,3 +158,20 @@ export const GetAllTheatresByMovie = async (payload) => {
     return error.response;
   }
 };
+
+// get show by id
+// Define an asynchronous function to get a show by id.
+export const GetShowById = async (payload) => {
+  try {
+    // Send an HTTP POST request with the provided payload to get a show by id.
+    const response = await axiosInstance.post(
+      "/api/theatres/get-show-by-id",
+      payload
+    );
+    // If the request is successful, return the response data from the server.
+    return response.data;
+  } catch (error) {
+    // If an error occurs, return the response object from the error.
+    return error.response;
+  }
+};
